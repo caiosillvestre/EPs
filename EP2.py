@@ -26,25 +26,25 @@ for line in Lines:
     count += 1
 
 
-    class Graph(object):
+class Graph(object):
 
-        def __init__(self, arestas):
-            self.adj = defaultdict(set)
-            self.add_arestas(arestas)
+    def __init__(self, arestas):
+        self.adj = defaultdict(set)
+        self.add_arestas(arestas)
 
-        def get_arestas(self):
-            return [(k, v) for k in self.adj.keys() for v in self.adj[k]]
+    def get_arestas(self):
+        return [(k, v) for k in self.adj.keys() for v in self.adj[k]]
 
-        def add_arestas(self, arestas):
-            for u, v in arestas:
-                self.adj[u].add(v)
-                self.adj[v].add(u)
+    def add_arestas(self, arestas):
+        for u, v in arestas:
+            self.adj[u].add(v)
+            self.adj[v].add(u)
 
-        def get_graus(self):
-            dict_graus = {}
-            for each in self.adj:
-                dict_graus[each] = len(self.adj[each])
-            return dict_graus
+    def get_graus(self):
+        dict_graus = {}
+        for each in self.adj:
+            dict_graus[each] = len(self.adj[each])
+        return dict_graus
 
 grafo_grande = Graph(arestas)
 A = grafo_grande.get_arestas()
