@@ -1,17 +1,22 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import time
+import seaborn as sns
 from tkinter.filedialog import askopenfilename
 from tkinter import *
 from collections import defaultdict
 
-file1 = open('C:\\Users\\caios\\Desktop\\AED2\\EP2\\cenario1.txt', 'r')
+root = Tk()
+filename = askopenfilename()
+root.destroy()
+
+file1 = open(filename, 'r')
 Lines = file1.readlines()
 
 count = 0
 arestas = []
 for line in Lines:
-    if count==0:
+    if count == 0:
         linha1 = line
     elif count == 1:
         linha2 = line
@@ -46,16 +51,22 @@ class Graph(object):
     def __str__(self):
         return '{}({})'.format(self.__class__.__name__, dict(self.adj))
 
+
 grafo_grande = Graph(arestas)
+
 graus = grafo_grande.get_graus()
 
 A = grafo_grande.get_arestas()
+
 Qtd_arestas = int(len(A)/2)
 
 hist = pd.DataFrame(list(graus.items()), columns=['vertice', 'grau'])
 
-x = hist['vertice']
-y = hist['grau']
-plt.plot(x, y)
-#plt.ylim(0, 10)
-plt.show()
+final = hist.groupby('grau').count()
+
+final = final.reset_index()
+
+sns.set_style('darkgrid')
+grafico = plt.plot(final.grau, final.vertice)
+
+sns.relplot(x="vertice", y="grau", data = final)
